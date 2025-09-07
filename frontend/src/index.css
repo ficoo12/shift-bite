@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@theme {
+  /* colors */
+
+  --color-primary-500: #fd4c3f;
+  --color-primary-200: #feb7b2;
+  --color-primary-100: #ffdbd9;
+  --color-secondary-500: #ffb400;
+  --color-secondary-600: #cc9000;
+  --color-lightGray: #eaeaea;
+  --color-darkGray: #787878;
+  --color-whiteColor: #fafafa;
+  --color-textDark: #222222;
+  --color-statePositive: #4caf50;
+  --color-stateNegative: #e53935;
+  --color-statePending: #fbc02d;
+  --color-stateManage: #007dd0;
+
+  /* typography */
+
+  --font-poppins: Poppins, sans-serif;
+  --text-h1: 36px;
+  --text-h2: 24px;
+  --text-h3: 20px;
+  --text-base: 16px;
+  --text-bodySmall: 14px;
+
+  /* spacing */
+
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 24px;
+  --spacing-6: 32px;
+  --spacing-7: 40px;
+  --spacing-8: 48px;
+  --spacing-9: 56px;
+  --spacing-10: 64px;
+}
+
+body {
+  @apply font-poppins text-textDark bg-whiteColor;
+  p {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+  }
+  h1 {
+    font-size: var(--text-h1);
+    font-weight: var(--font-weight-bold);
+  }
+  h2 {
+    font-size: var(--text-h2);
+    font-weight: var(--font-weight-bold);
+  }
+  h3 {
+    font-size: var(--text-h3);
+    font-weight: var(--font-weight-bold);
+  }
+  input {
+    @apply bg-white border border-darkGray text-darkGray p-3 w-full rounded-md;
+  }
+  label {
+    @apply text-bodySmall;
+  }
+}
+.card {
+  @apply bg-white drop-shadow-md drop-shadow-gray-300 rounded-lg;
+}
+.btnPrimary {
+  @apply bg-secondary-500 text-textDark w-full rounded-md px-6 py-3 hover:bg-secondary-600 transition-all duration-300 ease-in-out hover:text-white hover:cursor-pointer;
+}
+.btnManageState {
+  @apply bg-stateManage text-white rounded-md  px-6 py-3 transition-all duration-300 ease-in-out hover:cursor-pointer w-fit;
+}
+.emphasized {
+  @apply text-secondary-600 hover:cursor-pointer;
+}
+.Link {
+  @apply hover:bg-primary-100 hover:text-primary-500 pl-3 py-4 rounded-sm;
+}
+.LinkActive {
+  @apply bg-primary-200 text-primary-500 pl-3 py-4 rounded-sm;
+}
