@@ -12,7 +12,7 @@ import { SingleRestaurantPage } from "./features/restaurants/singleRestaurantPag
 import Employees from "./components/employees";
 import Schedule from "./components/schedule";
 import EmployeeRequests from "./components/EmployeeRequests";
-
+import { EditRestaurantForm } from "./features/restaurants/editRestaurantForm";
 export default function App() {
   const router = createBrowserRouter([
     {
@@ -36,6 +36,10 @@ export default function App() {
         {
           path: "/addrestaurants",
           element: <AddRestaurantForm></AddRestaurantForm>,
+        },
+        {
+          path: "/editRestaurant/:id",
+          element: <EditRestaurantForm></EditRestaurantForm>,
         },
         {
           path: "/schedule",
