@@ -3,20 +3,16 @@ const bcrypt = require("bcrypt");
 //create employee
 
 const createEmployee = async (req, res) => {
-  const hashedPassword = await bcrypt.hash(req.body.password, 10);
-  const { restaurantId } = req.params;
-  const Employee = new Employees({
-    name: req.body.name,
-    surname: req.body.surname,
-    email: req.body.email,
-    phone: req.body.phone,
-    password: hashedPassword,
-    role: req.body.role,
-    restaurant: restaurantId,
-  });
   try {
-    const newEmployee = await Employee.save();
-    res.status(201).json(newEmployee);
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const employee = {
+      ...req.body,
+      password: hashedPassword,
+      owner: req.user.sub,
+    };
+    const newEmployee = await Employees(employee);
+    await newEmployee.save();
+    res.status(200).json(newEmployee);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -38,25 +34,45 @@ const deleteEmployee = async (req, res) => {
   }
 };
 
-//get employees by restaurant
+//get all employees
 
-const getEmployeesByRestaurant = async (req, res) => {
+const getAllEmpployees = async (req, res) => {
+  const owner = req.user.sub;
   try {
-    const { restaurantId } = req.params;
-    const employeesByRestaurant = await Employees.find({
-      restaurant: restaurantId,
+    const employees = await Employees.find({
+      owner,
     })
       .populate("role", "name")
+      .populate("restaurant", "name")
       .sort({ createdAt: -1 });
+    console.log(employees);
 
-    res.status(201).json(employeesByRestaurant);
+    res.status(200).send(employees);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    console.error("Error fetching employees", err);
+    res.status(500).send({ message: err.message });
   }
 };
+//get employees by restaurant
+
+// const getEmployeesByRestaurant = async (req, res) => {
+//   try {
+//     const { restaurantId } = req.params;
+//     const employeesByRestaurant = await Employees.find({
+//       restaurant: restaurantId,
+//     })
+//       .populate("role", "name")
+//       .sort({ createdAt: -1 });
+
+//     res.status(200).json(employeesByRestaurant);
+//   } catch (err) {
+//     res.status(400).json({ message: err.message });
+//   }
+// };
 
 module.exports = {
   createEmployee,
   deleteEmployee,
-  getEmployeesByRestaurant,
+  // getEmployeesByRestaurant,
+  getAllEmpployees,
 };

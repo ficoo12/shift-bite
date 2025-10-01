@@ -11,6 +11,7 @@ const LoginForm = () => {
     <Form
       method="post"
       className="card max-w-[500px] p-6 space-y-3 mx-auto mt-30"
+      autoComplete="off"
     >
       {data && data.errors && (
         <ul>

@@ -3,19 +3,18 @@ const router = express.Router();
 const {
   createEmployee,
   deleteEmployee,
-  getEmployeesByRestaurant,
+  // getEmployeesByRestaurant,
+  getAllEmpployees,
 } = require("./employees.controller");
-
+const verifyToken = require("../middleware/verifyToken");
 //create employee
-router.post("/restaurants/:restaurantId/employees", createEmployee);
+router.post("/employees", verifyToken, createEmployee);
 
 //get employee
-router.get("/restaurants/:restaurantId/employees", getEmployeesByRestaurant);
+// router.get("/employees", verifyToken, getEmployeesByRestaurant);
+router.get("/employees", verifyToken, getAllEmpployees);
 
 //delete employee
-router.delete(
-  "/restaurants/:restaurantId/employees/:employeeId",
-  deleteEmployee
-);
+router.delete("employees/:id", verifyToken, deleteEmployee);
 
 module.exports = router;

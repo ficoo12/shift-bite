@@ -2,12 +2,13 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { restaurantUpdated } from "./restaurantsSlice";
+import { selectSingleRestaurant } from "./restaurantsSlice";
 export const EditRestaurantForm = () => {
   const { id } = useParams();
   console.log(Number(id));
 
   const restaurant = useAppSelector((state) =>
-    state.restaurants.find((restaurant) => restaurant.id === Number(id))
+    selectSingleRestaurant(state, Number(id))
   );
 
   const dispatch = useAppDispatch();

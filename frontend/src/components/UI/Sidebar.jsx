@@ -14,7 +14,7 @@ const Sidebar = ({ isOpen }) => {
           <img src={logo} alt="Logo" />
         </div>
 
-        <nav className="flex flex-col p-4 space-y-3">
+        <nav className="flex flex-col p-4 ">
           <NavLink
             to="/"
             className={({ isActive }) => (isActive ? "LinkActive" : "Link")}
@@ -26,6 +26,12 @@ const Sidebar = ({ isOpen }) => {
             className={({ isActive }) => (isActive ? "LinkActive" : "Link")}
           >
             Restaurants
+          </NavLink>
+          <NavLink
+            to="/roles"
+            className={({ isActive }) => (isActive ? "LinkActive" : "Link")}
+          >
+            Roles
           </NavLink>
           <NavLink
             to="/schedule"

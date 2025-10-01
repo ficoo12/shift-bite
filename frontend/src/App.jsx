@@ -9,10 +9,12 @@ import Dashboard from "./components/Dashboard";
 import { RestaurantsList } from "./features/restaurants/restaurantsList";
 import { AddRestaurantForm } from "./features/restaurants/addRestaurantForm";
 import { SingleRestaurantPage } from "./features/restaurants/singleRestaurantPage";
-import Employees from "./components/employees";
 import Schedule from "./components/schedule";
 import EmployeeRequests from "./components/EmployeeRequests";
 import { EditRestaurantForm } from "./features/restaurants/editRestaurantForm";
+import { RolesList } from "./features/roles/rolesList";
+import { EmployeesList } from "./features/employees/employeesList";
+import { AddNewEmployee } from "./features/employees/AddNewEmployee";
 export default function App() {
   const router = createBrowserRouter([
     {
@@ -42,16 +44,24 @@ export default function App() {
           element: <EditRestaurantForm></EditRestaurantForm>,
         },
         {
+          path: "/roles",
+          element: <RolesList></RolesList>,
+        },
+        {
           path: "/schedule",
           element: <Schedule></Schedule>,
         },
         {
           path: "/employees",
-          element: <Employees></Employees>,
+          element: <EmployeesList></EmployeesList>,
         },
         {
           path: "/employeerequests",
           element: <EmployeeRequests></EmployeeRequests>,
+        },
+        {
+          path: "/addNewEmployee",
+          element: <AddNewEmployee />,
         },
       ],
     },

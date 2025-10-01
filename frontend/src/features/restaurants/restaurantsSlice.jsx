@@ -1,43 +1,50 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import client from "../../api/client";
 
-const initialState = [
-  {
-    id: 1,
-    name: "Burger Hub",
-    location: "Berlin, Germany",
-    phone: "12345678",
-    imageURL:
-      "https://plus.unsplash.com/premium_photo-1661883237884-263e8de8869b?q=80&w=2089&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 2,
-    name: "Burger Hub House",
-    location: "Stuttgart, Germany",
-    phone: "12345678",
-    imageURL:
-      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 3,
-    name: "Burger Hub House 2",
-    location: "Esslingen, Germany",
-    phone: "12345678",
-    imageURL:
-      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-];
+export const fetchRestaurants = createAsyncThunk(
+  "restaurants/fetchRestaurants",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await client.get("/restaurants");
+      return response.data;
+    } catch (err) {
+      if (err.response) {
+        return rejectWithValue(err.response.data.message || "Forbidden");
+      }
+      return rejectWithValue(err.message);
+    }
+  }
+);
+
+export const createRestaurant = createAsyncThunk(
+  "restaurants/addRestaurant",
+  async (data) => {
+    try {
+      const response = await client.post("/restaurants", data);
+      return response.data;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+);
+
+const initialState = {
+  restaurants: [],
+  status: "idle",
+  error: null,
+};
 
 const restaurantsSlice = createSlice({
   name: "restaurants",
   initialState,
   reducers: {
     restauranAdded(state, action) {
-      state.push(action.payload);
+      state.restaurants.push(action.payload);
     },
     restaurantUpdated(state, action) {
       const { id, name, location, phone } = action.payload;
-      const existingRestaurant = state.find(
-        (restaurant) => restaurant.id === id
+      const existingRestaurant = state.restaurants.find(
+        (restaurant) => restaurant._id === id
       );
       if (existingRestaurant) {
         existingRestaurant.name = name;
@@ -46,6 +53,26 @@ const restaurantsSlice = createSlice({
       }
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchRestaurants.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchRestaurants.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.restaurants = action.payload;
+      })
+      .addCase(fetchRestaurants.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
+      });
+  },
 });
 export const { restauranAdded, restaurantUpdated } = restaurantsSlice.actions;
 export default restaurantsSlice.reducer;
+
+export const selectAllRestaurants = (state) => state.restaurants.restaurants;
+export const selectSingleRestaurant = (state, restaurantId) =>
+  state.restaurants.restaurants.find(
+    (restaurant) => restaurant._id === restaurantId
+  );

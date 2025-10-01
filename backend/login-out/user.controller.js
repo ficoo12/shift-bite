@@ -11,14 +11,13 @@ const loginUser = async (req, res) => {
     //traži korisnika u bazi ako ga nema 404
     const user = await User.findOne({ email });
     if (!user) {
-      res.status(404).send({ message: "User not found." });
-      return;
+      return res.status(404).send({ message: "User not found." });
     }
     //provjerava točnost lozinke
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      res.status(401).send({ message: "Invalid password!" });
+      return res.status(401).send({ message: "Invalid password!" });
     }
 
     //kreiramo payload za token
@@ -52,11 +51,11 @@ const loginUser = async (req, res) => {
       });
     } catch (error) {
       console.error("Error creating token:" + error);
-      res.status(500).send({ message: "Failed to create token" });
+      return res.status(500).send({ message: "Failed to create token" });
     }
   } catch (error) {
     console.error("Error fetching user", error);
-    res.status(500).send({ message: "Failed to fetch user." });
+    return res.status(500).send({ message: "Failed to fetch user." });
   }
 };
 

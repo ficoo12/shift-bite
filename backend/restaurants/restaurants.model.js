@@ -12,28 +12,19 @@ const restaurantModel = new mongoose.Schema({
   phone: {
     type: String,
   },
-  imageURL: {
-    type: String,
-  },
-  orders: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Orders",
-    },
-  ],
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Users",
     required: true,
   },
-  managers: [
+  employees: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Users",
+      ref: "Employees",
     },
   ],
   createdAt: { type: Date, default: Date.now },
 });
 
-const Restaurants = mongoose.model("Restaurants", restaurantModel);
+const Restaurants = mongoose.model("Restaurant", restaurantModel);
 module.exports = Restaurants;

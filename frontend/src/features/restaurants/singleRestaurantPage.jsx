@@ -1,13 +1,13 @@
 import { Link, useParams } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
+import { selectSingleRestaurant } from "./restaurantsSlice";
 
 export const SingleRestaurantPage = () => {
   const { id } = useParams();
-  console.log(Number(id));
 
   const restaurant = useAppSelector((state) =>
-    state.restaurants.find((restaurant) => restaurant.id === Number(id))
+    selectSingleRestaurant(state, id)
   );
 
   return (

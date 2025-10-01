@@ -83,3 +83,10 @@ body {
 .LinkActive {
   @apply bg-primary-200 text-primary-500 pl-3 py-4 rounded-sm;
 }
+
+td,
+th {
+  border: 1px solid #007dd0;
+  text-align: left;
+  padding: 8px;
+}

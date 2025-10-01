@@ -1,25 +1,21 @@
 const Restaurants = require("./restaurants.model");
 
-//create restaurant
 const createRestaurant = async (req, res) => {
-  const Restaurant = new Restaurants(req.body);
   try {
-    const newRestaurant = await Restaurant.save();
+    const restaurant = { ...req.body, owner: req.user.sub };
+    const newRestaurant = await Restaurants(restaurant);
+    await newRestaurant.save();
     res.status(200).json(newRestaurant);
   } catch (error) {
-    console.error("Error creating resource", error);
+    console.error("Error creating restaurant", error);
     res.status(500).send({ message: "Failed to create restaurant" });
   }
 };
 
-//delete restaurant by id
-
-//get all restaurants
-
 const getAllRestaurants = async (req, res) => {
-  const ownerId = req.user.id;
+  const owner = req.user.sub;
   try {
-    const restaurants = await Restaurants.find({ ownerId }).sort({
+    const restaurants = await Restaurants.find({ owner }).sort({
       createdAt: -1,
     });
     res.status(200).send(restaurants);
@@ -29,14 +25,12 @@ const getAllRestaurants = async (req, res) => {
   }
 };
 
-//get single restaurant
-
 const getSingleRestaurant = async (req, res) => {
-  const ownerId = req.user.id;
+  const owner = req.user.sub;
   const id = req.params.id;
 
   try {
-    const restaurant = await Restaurants.find({ id, ownerId });
+    const restaurant = await Restaurants.find({ id, owner });
     if (!restaurant.length) {
       res.status(404).send({ message: "Restaurant not found!" });
     }
