@@ -9,6 +9,7 @@ const EmployeesRoutes = require("./employees/employees.route");
 const RestaurantsRoutes = require("./restaurants/restaurants.route");
 const RolesRoutes = require("./roles/roles.route");
 const loginoutRoutes = require("./login-out/user.route");
+const ShiftRoutes = require("./schedules/schedules.route");
 app.use(
   cors({
     origin: ["http://localhost:5173"],
@@ -32,6 +33,7 @@ app.use("/api", EmployeesRoutes);
 app.use("/api", RestaurantsRoutes);
 app.use("/api", loginoutRoutes);
 app.use("/api", RolesRoutes);
+app.use("/api", ShiftRoutes);
 
 app.listen(process.env.PORT || 8080, () => {
   console.log(`listening for requests on port ${process.env.PORT || 8080}`);

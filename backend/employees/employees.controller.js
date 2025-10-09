@@ -12,6 +12,7 @@ const createEmployee = async (req, res) => {
     };
     const newEmployee = await Employees(employee);
     await newEmployee.save();
+
     res.status(200).json(newEmployee);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -45,34 +46,15 @@ const getAllEmpployees = async (req, res) => {
       .populate("role", "name")
       .populate("restaurant", "name")
       .sort({ createdAt: -1 });
-    console.log(employees);
 
     res.status(200).send(employees);
   } catch (err) {
-    console.error("Error fetching employees", err);
     res.status(500).send({ message: err.message });
   }
 };
-//get employees by restaurant
-
-// const getEmployeesByRestaurant = async (req, res) => {
-//   try {
-//     const { restaurantId } = req.params;
-//     const employeesByRestaurant = await Employees.find({
-//       restaurant: restaurantId,
-//     })
-//       .populate("role", "name")
-//       .sort({ createdAt: -1 });
-
-//     res.status(200).json(employeesByRestaurant);
-//   } catch (err) {
-//     res.status(400).json({ message: err.message });
-//   }
-// };
 
 module.exports = {
   createEmployee,
   deleteEmployee,
-  // getEmployeesByRestaurant,
   getAllEmpployees,
 };

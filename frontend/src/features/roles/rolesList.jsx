@@ -20,7 +20,7 @@ export const RolesList = () => {
   console.log(roles);
 
   const renderRoles = roles.map((role) => (
-    <div>
+    <div key={role._id}>
       <p>{role.name}</p>
     </div>
   ));

@@ -3,7 +3,7 @@ const Restaurants = require("./restaurants.model");
 const createRestaurant = async (req, res) => {
   try {
     const restaurant = { ...req.body, owner: req.user.sub };
-    const newRestaurant = await Restaurants(restaurant);
+    const newRestaurant = new Restaurants(restaurant);
     await newRestaurant.save();
     res.status(200).json(newRestaurant);
   } catch (error) {
@@ -31,6 +31,7 @@ const getSingleRestaurant = async (req, res) => {
 
   try {
     const restaurant = await Restaurants.find({ id, owner });
+
     if (!restaurant.length) {
       res.status(404).send({ message: "Restaurant not found!" });
     }

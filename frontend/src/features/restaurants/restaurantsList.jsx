@@ -21,7 +21,7 @@ export const RestaurantsList = () => {
   console.log(restaurants);
 
   const renderRestaurants = restaurants.map((restaurant) => (
-    <div className="card w-80 overflow-hidden">
+    <div key={restaurant._id} className="card w-80 overflow-hidden">
       <div className="px-3 py-3 space-y-2">
         <img className="rounded-md" src={restaurantImg}></img>
         <h2>{restaurant.name}</h2>

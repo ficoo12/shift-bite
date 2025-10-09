@@ -1,6 +1,8 @@
 import { redirect } from "react-router-dom";
 
 async function getNewAccessToken(token) {
+  if (!token) return null;
+
   const link = "http://localhost:8080/api/refresh-token";
 
   const response = await fetch(link, {

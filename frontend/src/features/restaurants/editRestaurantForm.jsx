@@ -5,10 +5,10 @@ import { restaurantUpdated } from "./restaurantsSlice";
 import { selectSingleRestaurant } from "./restaurantsSlice";
 export const EditRestaurantForm = () => {
   const { id } = useParams();
-  console.log(Number(id));
+  console.log(id);
 
   const restaurant = useAppSelector((state) =>
-    selectSingleRestaurant(state, Number(id))
+    selectSingleRestaurant(state, id)
   );
 
   const dispatch = useAppDispatch();

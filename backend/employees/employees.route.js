@@ -10,8 +10,7 @@ const verifyToken = require("../middleware/verifyToken");
 //create employee
 router.post("/employees", verifyToken, createEmployee);
 
-//get employee
-// router.get("/employees", verifyToken, getEmployeesByRestaurant);
+//get all employees
 router.get("/employees", verifyToken, getAllEmpployees);
 
 //delete employee

@@ -1,55 +1,80 @@
 import { Form, Link, NavLink } from "react-router-dom";
 import logo from "../../../public/Logo.svg";
-
+import {
+  ChartBarIcon,
+  MapPinIcon,
+  UserGroupIcon,
+  ChatBubbleLeftEllipsisIcon,
+  NumberedListIcon,
+} from "@heroicons/react/24/solid";
 const Sidebar = ({ isOpen }) => {
   return (
     <>
-      {/* Sidebar */}
       <aside
-        className={`fixed lg:static top-0 left-0 z-50 h-full w-64 bg-white shadow-md transition-transform duration-300 ease-in-out transform mt-[56px] lg:mt-[0px]
+        className={`fixed lg:static top-0 left-0 z-50 h-full w-64 bg-white shadow-md transition-transform duration-300 ease-in-out transform mt-[56px] lg:mt-[0px] 
           ${isOpen ? "translate-x-0" : "-translate-x-full"} 
           lg:translate-x-0`}
       >
-        <div className="p-4 border-b">
+        <div className="p-4 border-b border-[#2222222e]">
           <img src={logo} alt="Logo" />
         </div>
 
-        <nav className="flex flex-col p-4 ">
+        <nav className="flex flex-col p-4 space-y-2">
           <NavLink
             to="/"
-            className={({ isActive }) => (isActive ? "LinkActive" : "Link")}
+            className={({ isActive }) =>
+              isActive
+                ? "LinkActive flex items-center gap-2"
+                : "Link flex items-center gap-2 duration-100 transform ease-in"
+            }
           >
-            Dashboard
+            <ChartBarIcon className="w-5 h-5"></ChartBarIcon>
+            <p>Dashboard</p>
           </NavLink>
+
           <NavLink
             to="/restaurants"
-            className={({ isActive }) => (isActive ? "LinkActive" : "Link")}
+            className={({ isActive }) =>
+              isActive
+                ? "LinkActive flex items-center gap-2"
+                : "Link flex items-center gap-2 duration-100 transform ease-in"
+            }
           >
-            Restaurants
+            <MapPinIcon className="w-5 h-5"></MapPinIcon>
+            <p>Restaurants</p>
           </NavLink>
           <NavLink
             to="/roles"
-            className={({ isActive }) => (isActive ? "LinkActive" : "Link")}
+            className={({ isActive }) =>
+              isActive
+                ? "LinkActive flex items-center gap-2"
+                : "Link flex items-center gap-2 duration-100 transform ease-in"
+            }
           >
-            Roles
-          </NavLink>
-          <NavLink
-            to="/schedule"
-            className={({ isActive }) => (isActive ? "LinkActive" : "Link")}
-          >
-            Schedule
+            <NumberedListIcon className="w-5 h-5"></NumberedListIcon>
+            <p>Roles</p>
           </NavLink>
           <NavLink
             to="/employees"
-            className={({ isActive }) => (isActive ? "LinkActive" : "Link")}
+            className={({ isActive }) =>
+              isActive
+                ? "LinkActive flex items-center gap-2"
+                : "Link flex items-center gap-2 duration-100 transform ease-in"
+            }
           >
-            Employees
+            <UserGroupIcon className="w-5 h-5"></UserGroupIcon>
+            <p>Employees</p>
           </NavLink>
           <NavLink
             to="/employeerequests"
-            className={({ isActive }) => (isActive ? "LinkActive" : "Link")}
+            className={({ isActive }) =>
+              isActive
+                ? "LinkActive flex items-center gap-2"
+                : "Link flex items-center gap-2 duration-100 transform ease-in"
+            }
           >
-            Employee Requests
+            <ChatBubbleLeftEllipsisIcon className="w-5 h-5"></ChatBubbleLeftEllipsisIcon>
+            <p>Employee Requests</p>
           </NavLink>
 
           <Form action="/logout" method="POST">

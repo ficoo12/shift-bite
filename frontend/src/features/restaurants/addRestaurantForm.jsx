@@ -1,9 +1,9 @@
 import React from "react";
-import { useAppDispatch } from "../../app/hooks";
 import { createRestaurant } from "./restaurantsSlice";
+import { useDispatch } from "react-redux";
 
 export const AddRestaurantForm = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
 

@@ -4,23 +4,19 @@ const bcrypt = require("bcrypt");
 const Token = require("./token.model");
 const User = require("./user.model");
 
-//login user endpoint function
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
-    //traži korisnika u bazi ako ga nema 404
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).send({ message: "User not found." });
     }
-    //provjerava točnost lozinke
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
       return res.status(401).send({ message: "Invalid password!" });
     }
-
-    //kreiramo payload za token
 
     const payload = {
       sub: user._id,
@@ -28,11 +24,7 @@ const loginUser = async (req, res) => {
       surname: user.surname,
     };
 
-    //generiramo access token
-
     const access_token = jwt.sign(payload, JWT_SECRET, { expiresIn: 5 * 60 });
-
-    //generiramo refresh token
 
     const refresh_token = jwt.sign({ sub: user._id }, JWT_SECRET, {
       expiresIn: 5 * 24 * 60 * 60,
@@ -59,8 +51,6 @@ const loginUser = async (req, res) => {
   }
 };
 
-//logout user endpoint function
-
 const logoutUser = async (req, res) => {
   const refresh_token = req.body.refresh_token;
   jwt.verify(refresh_token, JWT_SECRET, async (err, user) => {
@@ -82,8 +72,6 @@ const logoutUser = async (req, res) => {
   });
 };
 
-//refresh token endpoint function
-
 const refreshToken = async (req, res) => {
   const refresh_token = req.body.refresh_token;
   jwt.verify(refresh_token, JWT_SECRET, async (err, user) => {
@@ -93,7 +81,7 @@ const refreshToken = async (req, res) => {
     try {
       const refresh_token_returned = await Token.find({ refresh_token });
       if (!refresh_token_returned.length) {
-        res.status(404).send({ message: "Invalif token(not on whitelist)!" });
+        res.status(404).send({ message: "Invalid token(not on whitelist)!" });
         return;
       }
       try {

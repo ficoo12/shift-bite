@@ -9,7 +9,6 @@ import Dashboard from "./components/Dashboard";
 import { RestaurantsList } from "./features/restaurants/restaurantsList";
 import { AddRestaurantForm } from "./features/restaurants/addRestaurantForm";
 import { SingleRestaurantPage } from "./features/restaurants/singleRestaurantPage";
-import Schedule from "./components/schedule";
 import EmployeeRequests from "./components/EmployeeRequests";
 import { EditRestaurantForm } from "./features/restaurants/editRestaurantForm";
 import { RolesList } from "./features/roles/rolesList";
@@ -47,10 +46,7 @@ export default function App() {
           path: "/roles",
           element: <RolesList></RolesList>,
         },
-        {
-          path: "/schedule",
-          element: <Schedule></Schedule>,
-        },
+
         {
           path: "/employees",
           element: <EmployeesList></EmployeesList>,
