@@ -16,7 +16,7 @@ const getAllRestaurants = async (req, res) => {
   const owner = req.user.sub;
   try {
     const restaurants = await Restaurants.find({ owner }).sort({
-      createdAt: -1,
+      createdAt: 1,
     });
     res.status(200).send(restaurants);
   } catch (error) {

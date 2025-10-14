@@ -12,14 +12,26 @@ export const SingleRestaurantPage = () => {
 
   return (
     <>
-      <div className="flex items-center gap-2">
-        <Link to="/restaurants" className="flex">
-          <ArrowLeftIcon></ArrowLeftIcon>
-          <p>Go back</p>
-        </Link>
+      <div className="flex items-center gap-2 justify-between py-4">
+        <div className="flex gap-4">
+          <Link
+            to="/restaurants"
+            className="flex bg-white px-4 w-40 items-center gap-4 rounded-sm border border-lightGray hover:bg-lightGray hover:cursor-pointer transition-all duration-200 ease-in"
+          >
+            <ArrowLeftIcon className="w-5 "></ArrowLeftIcon>
+            <p>Go back</p>
+          </Link>
 
-        <h1>{restaurant.name}</h1>
-        <Link to={`/editRestaurant/${restaurant._id}`}>
+          <h1>
+            {restaurant.name.charAt(0).toUpperCase()}
+            {restaurant.name.slice(1)}
+          </h1>
+        </div>
+
+        <Link
+          className="btnPrimary max-w-fit"
+          to={`/editRestaurant/${restaurant._id}`}
+        >
           Edit restaurant info
         </Link>
       </div>

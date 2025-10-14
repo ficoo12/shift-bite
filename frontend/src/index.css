@@ -3,6 +3,7 @@
 @theme {
   /* colors */
 
+  --color-primary-500Hover: #c20d00;
   --color-primary-500: #fd4c3f;
   --color-primary-200: #feb7b2;
   --color-primary-100: #ffdbd9;
@@ -16,6 +17,7 @@
   --color-stateNegative: #e53935;
   --color-statePending: #fbc02d;
   --color-stateManage: #007dd0;
+  --color-stateManageHover: #005085;
 
   /* typography */
 
@@ -59,10 +61,31 @@ body {
     font-weight: var(--font-weight-bold);
   }
   input {
-    @apply bg-white border border-darkGray text-darkGray p-3 w-full rounded-md;
+    @apply bg-gray-100 border border-lightGray text-darkGray p-3 w-full rounded-sm;
+  }
+  select {
+    @apply bg-gray-100 border border-lightGray text-darkGray p-3 w-full rounded-sm;
+  }
+  input::placeholder {
+    @apply text-gray-300;
   }
   label {
     @apply text-bodySmall;
+  }
+  .tableEmployee {
+    @apply bg-white w-full border border-darkGray mt-5;
+    .thEmployee {
+      @apply text-left text-darkGray pt-4;
+    }
+    .thEmployee:nth-child(1) {
+      @apply pl-4;
+    }
+    .tdEmployee {
+      @apply py-5 border-b-1;
+    }
+    .tdEmployee:nth-child(1) {
+      @apply pl-4;
+    }
   }
 }
 .card {
@@ -71,8 +94,11 @@ body {
 .btnPrimary {
   @apply bg-secondary-500 text-textDark w-full rounded-md px-6 py-3 hover:bg-secondary-600 transition-all duration-300 ease-in-out hover:text-white hover:cursor-pointer;
 }
+.btnDelete {
+  @apply bg-primary-500 text-white w-fit rounded-md px-6 py-3 hover:bg-primary-500Hover transition-all duration-300 ease-in-out hover:cursor-pointer max-w-xs;
+}
 .btnManageState {
-  @apply bg-stateManage text-white rounded-md  px-6 py-3 transition-all duration-300 ease-in-out hover:cursor-pointer w-fit;
+  @apply bg-stateManage text-white rounded-md  px-6 py-3 transition-all duration-300 ease-in-out hover:cursor-pointer w-fit hover:bg-stateManageHover;
 }
 .emphasized {
   @apply text-secondary-600 hover:cursor-pointer;
@@ -82,11 +108,4 @@ body {
 }
 .LinkActive {
   @apply bg-primary-200 text-primary-500 pl-3 py-4 rounded-sm;
-}
-
-td,
-th {
-  border: 1px solid #007dd0;
-  text-align: left;
-  padding: 8px;
 }

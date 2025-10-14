@@ -5,9 +5,12 @@ import {
 } from "../restaurants/restaurantsSlice";
 import { fetchRoles, selectAllRoles } from "../roles/rolesSlice";
 import { useEffect } from "react";
-import { createEmployee } from "./employeesSlice";
+import { createEmployee, employeeAdded } from "./employeesSlice";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { BackwardIcon } from "@heroicons/react/24/solid";
 export const AddNewEmployee = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const restaurants = useSelector(selectAllRestaurants);
   const roles = useSelector(selectAllRoles);
   const restaurantStatus = useSelector((state) => state.restaurants.status);
@@ -53,13 +56,22 @@ export const AddNewEmployee = () => {
       role,
       restaurant,
     };
+    dispatch(employeeAdded(newEmployee));
     dispatch(createEmployee(newEmployee));
     form.reset();
+    navigate("/employees");
   };
 
   return (
     <div>
-      <h1>Add new employee</h1>
+      <div className="flex items-center justify-between">
+        <div className="flex hover:bg-gray-200 px-4 py-2 rounded-sm gap-2 duration-300">
+          <BackwardIcon className="w-5"></BackwardIcon>
+          <Link to="/employees">Back to employees list</Link>
+        </div>
+
+        <h1 className="mb-5">Add new employee form</h1>
+      </div>
       <form
         className="card px-5 py-5 space-y-4"
         autoComplete="off"
@@ -81,6 +93,7 @@ export const AddNewEmployee = () => {
             type="text"
             id="employeeSurname"
             name="employeeSurname"
+            autoCapitalize="off"
             required
           ></input>
         </div>

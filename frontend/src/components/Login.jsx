@@ -1,5 +1,4 @@
 import { redirect } from "react-router-dom";
-
 import LoginForm from "./LoginForm";
 import axios from "axios";
 
@@ -23,6 +22,11 @@ export async function action({ request }) {
 
     const accessToken = response.data.access_token;
     const refreshToken = response.data.refresh_token;
+    const user = response.data.user;
+
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
 
     const accessTokenDuration = new Date();
     accessTokenDuration.setMinutes(accessTokenDuration.getMinutes() + 5);

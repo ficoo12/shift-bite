@@ -3,7 +3,6 @@ const router = express.Router();
 const {
   createEmployee,
   deleteEmployee,
-  // getEmployeesByRestaurant,
   getAllEmpployees,
 } = require("./employees.controller");
 const verifyToken = require("../middleware/verifyToken");
@@ -14,6 +13,6 @@ router.post("/employees", verifyToken, createEmployee);
 router.get("/employees", verifyToken, getAllEmpployees);
 
 //delete employee
-router.delete("employees/:id", verifyToken, deleteEmployee);
+router.delete("/employees/:id", verifyToken, deleteEmployee);
 
 module.exports = router;

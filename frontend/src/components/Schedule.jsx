@@ -120,14 +120,14 @@ const Schedule = ({ id }) => {
 
   return (
     <div className="relative">
-      <div className="flex gap-4 ">
+      <div className="flex gap-4 w-full justify-start pb-4">
         <ArrowLeftIcon
           onClick={() => getPrevWeek()}
           className="w-5 hover:cursor-pointer"
         />
-        <h2>
+        <h3>
           {format(firstDay, "dd-MMM")} - {format(lastDay, "dd-MMM")}
-        </h2>
+        </h3>
         <ArrowRightIcon
           onClick={() => getNextWeek()}
           className="w-5 hover:cursor-pointer"
@@ -137,16 +137,23 @@ const Schedule = ({ id }) => {
       <table className="container">
         <thead>
           <tr>
-            <th>Roles</th>
+            <th className="bg-white text-left pl-2">Roles</th>
             {weekdays.map((day) => {
-              return <th key={day}>{day}</th>;
+              return (
+                <th
+                  key={day}
+                  className="bg-lightGray border border-lightGray font-normal py-2 "
+                >
+                  {day}
+                </th>
+              );
             })}
           </tr>
         </thead>
         <tbody>
           {roles.map((role) => (
-            <tr key={role._id}>
-              <td>{role.name}</td>
+            <tr key={role._id} className="bg-white border border-lightGray">
+              <td className="pl-2">{role.name}</td>
               {daysInWeek.map((day) => {
                 const dayShifts = shifts.filter(
                   (shift) =>
@@ -160,12 +167,15 @@ const Schedule = ({ id }) => {
                       setSelectedDate(day);
                       setOpen(true);
                     }}
-                    className="bg-white  h-20 hover:bg-gray-300 hover:cursor-pointer"
+                    className="bg-white  h-20 hover:bg-gray-300 hover:cursor-pointer  border border-lightGray max-w-20 lg:min-w-10 px-2 duration-200 transform-all"
                     key={day}
                   >
                     {dayShifts.length > 0 &&
                       dayShifts.map((shift) => (
-                        <div key={shift._id}>
+                        <div
+                          key={shift._id}
+                          className="bg-secondary-500 py-2 px-2 rounded-xs"
+                        >
                           <p>
                             {shift.employee.name} {shift.employee.surname}
                           </p>
@@ -182,27 +192,43 @@ const Schedule = ({ id }) => {
         </tbody>
       </table>
       <Modal open={open} close={() => setOpen(false)}>
-        <p>Define new shift</p>
-        <form onSubmit={defineShift} autoComplete="off">
-          <div>
-            <label htmlFor="startTime">Start time:</label>
-            <input type="time" id="startTime" name="startTime" required></input>
+        <h1 className="text-center">Define new shift</h1>
+        <form onSubmit={defineShift} autoComplete="off" className="space-y-5">
+          <div className="flex gap-2">
+            <div>
+              <label htmlFor="startTime">Start time:</label>
+              <input
+                type="time"
+                id="startTime"
+                name="startTime"
+                required
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="endTime">End time:</label>
+              <input type="time" id="endTime" name="endTime" required></input>
+            </div>
           </div>
-          <div>
-            <label htmlFor="endTime">End time:</label>
-            <input type="time" id="endTime" name="endTime" required></input>
-          </div>
+
           <div>
             <label htmlFor="employee">Choose employee:</label>
-            <select id="employee" name="employee" required>
+            <select
+              id="employee"
+              name="employee"
+              required
+              className="bg-white w-full px-4 py-4 border border-textDark rounded-sm"
+            >
               {employees.map((employee) => (
                 <option key={employee._id} value={employee._id}>
-                  {employee.name} {employee.surname}
+                  {employee.name.charAt(0).toUpperCase()}
+                  {employee.name.slice(1).toLowerCase()}{" "}
+                  {employee.surname.charAt(0).toUpperCase(1)}
+                  {employee.surname.slice(1).toLowerCase()}
                 </option>
               ))}
             </select>
           </div>
-          <button className="btnPrimary">Define new shift</button>
+          <button className="btnPrimary ">Define new shift</button>
         </form>
       </Modal>
     </div>

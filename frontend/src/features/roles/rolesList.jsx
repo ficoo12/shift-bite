@@ -1,13 +1,15 @@
 import { selectAllRoles, fetchRoles } from "./rolesSlice";
-import { AddNewRole } from "./addNewRole";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { PlusIcon } from "@heroicons/react/24/solid";
+import { AddNewRole } from "./addNewRole";
 
 export const RolesList = () => {
   const dispatch = useDispatch();
   const roles = useSelector(selectAllRoles);
   const rolesStatus = useSelector((state) => state.roles.status);
   const error = useSelector((state) => state.roles.error);
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
     if (rolesStatus == "idle") {
@@ -20,8 +22,11 @@ export const RolesList = () => {
   console.log(roles);
 
   const renderRoles = roles.map((role) => (
-    <div key={role._id}>
-      <p>{role.name}</p>
+    <div
+      className="bg-white max-w-60 min-h-60 flex justify-center items-center shadow rounded-md lg:min-w-60"
+      key={role._id}
+    >
+      <h3 className="text-center">{role.name}</h3>
     </div>
   ));
 
@@ -29,9 +34,19 @@ export const RolesList = () => {
 
   return (
     <section>
-      <AddNewRole></AddNewRole>
       <h1>Defined roles</h1>
-      <div>{renderRoles}</div>
+
+      <div className="flex gap-5 mt-5">
+        {renderRoles}
+        <div
+          onClick={() => setModal(true)}
+          className="bg-white max-w-60 min-h-60 flex justify-center items-center shadow rounded-md lg:min-w-60 flex-col hover:bg-secondary-500 transform-all duration-200 ease-in hover:cursor-pointer"
+        >
+          <PlusIcon className="w-10"></PlusIcon>
+          <p>Add role</p>
+        </div>
+      </div>
+      <AddNewRole open={modal} close={() => setModal(false)}></AddNewRole>
     </section>
   );
 };

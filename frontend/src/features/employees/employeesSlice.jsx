@@ -18,12 +18,24 @@ export const fetchEmployees = createAsyncThunk(
 
 export const createEmployee = createAsyncThunk(
   "employees/addEmployee",
-  async (data) => {
+  async (data, { rejectWithValue }) => {
     try {
       const response = await client.post("/employees", data);
       return response.data;
     } catch (err) {
-      console.error(err);
+      return rejectWithValue(err.response?.data?.message || err.message);
+    }
+  }
+);
+
+export const deleteEmployee = createAsyncThunk(
+  "employee/deleteEmployee",
+  async (employeeId, { rejectWithValue }) => {
+    try {
+      const response = await client.delete(`/employees/${employeeId}`);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || err.message);
     }
   }
 );
@@ -41,6 +53,12 @@ const employeesSlice = createSlice({
     employeeAdded(state, action) {
       state.employees.push(action.payload);
     },
+    employeeRemoved(state, action) {
+      const employeeId = action.payload;
+      state.employees = state.employees.filter((employee) => {
+        return employee._id !== employeeId;
+      });
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -54,10 +72,24 @@ const employeesSlice = createSlice({
       .addCase(fetchEmployees.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload || action.error.message;
+      })
+      .addCase(deleteEmployee.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteEmployee.fulfilled, (state, action) => {
+        const deletedEmployeeId = action.payload._id;
+        state.employees = state.employees.filter(
+          (employee) => employee._id !== deletedEmployeeId
+        );
+        state.status = "succeeded";
+      })
+      .addCase(deleteEmployee.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
       });
   },
 });
 
-export const { employeeAdded } = employeesSlice.actions;
+export const { employeeAdded, employeeRemoved } = employeesSlice.actions;
 export default employeesSlice.reducer;
 export const selectAllEmployees = (state) => state.employees.employees;

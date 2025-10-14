@@ -23,8 +23,11 @@ const createEmployee = async (req, res) => {
 
 const deleteEmployee = async (req, res) => {
   try {
-    const { employeeId } = req.params;
-    const deletedEmployee = await Employees.findByIdAndDelete(employeeId);
+    //it must be id because you sepcified the route like this: "/employees/:id"
+    //so when express reads url it will parse it into req.params.id
+    const { id } = req.params;
+
+    const deletedEmployee = await Employees.findByIdAndDelete(id);
 
     if (!deletedEmployee) {
       return res.status(404).json({ message: "Zaposlenik nije pronađen." });
@@ -52,6 +55,8 @@ const getAllEmpployees = async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 };
+
+//edit employee info
 
 module.exports = {
   createEmployee,
