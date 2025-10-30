@@ -1,8 +1,9 @@
 const Shifts = require("./schedules.model");
+require("dotenv").config();
 
 const createShift = async (req, res) => {
   try {
-    const shift = { ...req.body, owner: req.user.sub };
+    const shift = { ...req.body, owner: req.userId };
     const newShift = await Shifts(shift);
     await newShift.save();
     res.status(200).json(newShift);
@@ -26,7 +27,7 @@ const deleteShift = async (req, res) => {
 
 const getAllShifts = async (req, res) => {
   try {
-    const owner = req.user.sub;
+    const owner = req.userId;
     const shifts = await Shifts.find({ owner })
       .populate("employee", "name surname role")
       .sort({ createdAt: -1 });

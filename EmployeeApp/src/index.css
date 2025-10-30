@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+@theme {
+  /* colors */
+
+  --color-primary-500Hover: #c20d00;
+  --color-primary-500: #fd4c3f;
+  --color-primary-200: #feb7b2;
+  --color-primary-100: #ffdbd9;
+  --color-secondary-500: #ffb400;
+  --color-secondary-600: #cc9000;
+  --color-lightGray: #eaeaea;
+  --color-darkGray: #787878;
+  --color-whiteColor: #fafafa;
+  --color-textDark: #333;
+  --color-statePositive: #4caf50;
+  --color-stateNegative: #e53935;
+  --color-statePending: #fbc02d;
+  --color-stateManage: #007dd0;
+  --color-stateManageHover: #005085;
+
+  /* typography */
+
+  --font-poppins: Poppins, sans-serif;
+  --text-h1: 36px;
+  --text-h2: 24px;
+  --text-h3: 20px;
+  --text-base: 16px;
+  --text-bodySmall: 14px;
+
+  /* spacing */
+
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 24px;
+  --spacing-6: 32px;
+  --spacing-7: 40px;
+  --spacing-8: 48px;
+  --spacing-9: 56px;
+  --spacing-10: 64px;
+}
+
+body {
+  @apply font-poppins text-textDark bg-whiteColor;
+  p {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+  }
+  h1 {
+    font-size: var(--text-h1);
+    font-weight: var(--font-weight-bold);
+  }
+  h2 {
+    font-size: var(--text-h2);
+    font-weight: var(--font-weight-bold);
+  }
+  h3 {
+    font-size: var(--text-h3);
+    font-weight: var(--font-weight-bold);
+  }
+  input {
+    @apply bg-gray-100 border border-lightGray text-darkGray p-3 w-full rounded-sm;
+  }
+  select {
+    @apply bg-gray-100 border border-lightGray text-darkGray p-3 w-full rounded-sm;
+  }
+  input::placeholder {
+    @apply text-gray-300;
+  }
+  label {
+    @apply text-bodySmall;
+  }
+  .tableEmployee {
+    @apply bg-white w-full border border-darkGray mt-5;
+    .thEmployee {
+      @apply text-left text-darkGray pt-4;
+    }
+    .thEmployee:nth-child(1) {
+      @apply pl-4;
+    }
+    .tdEmployee {
+      @apply py-5 border-b-1;
+    }
+    .tdEmployee:nth-child(1) {
+      @apply pl-4;
+    }
+  }
+}
+.card {
+  @apply bg-white drop-shadow-md drop-shadow-gray-300 rounded-lg;
+}
+.btnPrimary {
+  @apply bg-secondary-500 text-textDark w-full rounded-md px-6 py-3 hover:bg-secondary-600 transition-all duration-300 ease-in-out hover:text-white hover:cursor-pointer;
+}
+.btnDelete {
+  @apply bg-primary-500 text-white w-fit rounded-md px-6 py-3 hover:bg-primary-500Hover transition-all duration-300 ease-in-out hover:cursor-pointer max-w-xs;
+}
+.btnManageState {
+  @apply bg-stateManage text-white rounded-md  px-6 py-3 transition-all duration-300 ease-in-out hover:cursor-pointer w-fit hover:bg-stateManageHover;
+}
+.emphasized {
+  @apply text-secondary-600 hover:cursor-pointer;
+}
+.Link {
+  @apply hover:bg-primary-100 hover:text-primary-500 pl-3 py-4 rounded-sm;
+}
+.LinkActive {
+  @apply bg-primary-200 text-primary-500 pl-3 py-4 rounded-sm;
+}

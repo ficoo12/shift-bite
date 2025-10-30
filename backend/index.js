@@ -2,23 +2,24 @@ const express = require("express");
 require("dotenv").config();
 const mongoose = require("mongoose");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const app = express();
 
 const UsersRoutes = require("./users/users.route");
 const EmployeesRoutes = require("./employees/employees.route");
 const RestaurantsRoutes = require("./restaurants/restaurants.route");
 const RolesRoutes = require("./roles/roles.route");
-const loginoutRoutes = require("./login-out/user.route");
 const ShiftRoutes = require("./schedules/schedules.route");
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5173", "http://localhost:5174"],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   })
 );
 
-app.use(express.json());
+app.use(express.json()); // allows us to parse incoming requests :req.body
+app.use(cookieParser()); // this will allow us to parse incoming cookies
 
 main()
   .then(() => console.log("Mongodb connect successfully."))
@@ -31,7 +32,6 @@ async function main() {
 app.use("/api", UsersRoutes);
 app.use("/api", EmployeesRoutes);
 app.use("/api", RestaurantsRoutes);
-app.use("/api", loginoutRoutes);
 app.use("/api", RolesRoutes);
 app.use("/api", ShiftRoutes);
 

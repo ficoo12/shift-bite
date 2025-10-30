@@ -1,8 +1,9 @@
 const Restaurants = require("./restaurants.model");
+const Employees = require("../employees/employees.model");
 
 const createRestaurant = async (req, res) => {
   try {
-    const restaurant = { ...req.body, owner: req.user.sub };
+    const restaurant = { ...req.body, owner: req.userId };
     const newRestaurant = new Restaurants(restaurant);
     await newRestaurant.save();
     res.status(200).json(newRestaurant);
@@ -13,7 +14,7 @@ const createRestaurant = async (req, res) => {
 };
 
 const getAllRestaurants = async (req, res) => {
-  const owner = req.user.sub;
+  const owner = req.userId;
   try {
     const restaurants = await Restaurants.find({ owner }).sort({
       createdAt: 1,
@@ -25,14 +26,56 @@ const getAllRestaurants = async (req, res) => {
   }
 };
 
-const getSingleRestaurant = async (req, res) => {
-  const owner = req.user.sub;
-  const id = req.params.id;
-
+const updateRestaurant = async (req, res) => {
   try {
-    const restaurant = await Restaurants.find({ id, owner });
+    const ownerId = req.userId;
+    const { id } = req.params;
+    const updatedRestaurant = Restaurants.findOneAndUpdate(
+      { _id: id, owner: ownerId },
+      { ...req.body, owner: ownerId },
+      {
+        new: true,
+      }
+    );
+    if (!updatedRestaurant) {
+      res.status(404).send({ message: "restaurant not found." });
+      return;
+    }
+    res.status(200).send({
+      message: "Restaurant updated successfuly",
+      restaurant: updatedRestaurant,
+    });
+  } catch (error) {
+    console.error("Error updating a restaurant", error);
+    res.status(500).send({ message: "Failed to update a resource" });
+  }
+};
 
-    if (!restaurant.length) {
+const deleteRestaurant = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (id) {
+      await Employees.deleteMany({ restaurant: id });
+      const deletedRestaurant = await Restaurants.findOneAndDelete(id);
+      if (!deletedRestaurant) {
+        res.status(404).send({ message: "Restaurant not found" });
+        return;
+      }
+      res.status(200).json({ message: "Restoran uspiješno obrisan" });
+    }
+  } catch (error) {
+    console.error({ message: "Failed to delete restaurant", error });
+    res.status(500).send({ message: "Failed to delete restaurant" });
+  }
+};
+
+const getSingleRestaurant = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const restaurant = await Restaurants.findById(id);
+
+    if (!restaurant) {
       res.status(404).send({ message: "Restaurant not found!" });
     }
     res.status(200).send(restaurant);
@@ -46,4 +89,6 @@ module.exports = {
   createRestaurant,
   getAllRestaurants,
   getSingleRestaurant,
+  updateRestaurant,
+  deleteRestaurant,
 };
