@@ -13,12 +13,12 @@ export async function checkAuth() {
     const response = await client.get("/check-employee-auth");
     const employee = response.data.employee;
     if (!employee) {
-      return redirect("/login");
+      throw redirect("/login");
     }
     return employee;
   } catch (error) {
-    console.error("checkAuth error:", error);
-    return redirect("/login");
+    console.error(error);
+    throw redirect("/login");
   }
 }
 

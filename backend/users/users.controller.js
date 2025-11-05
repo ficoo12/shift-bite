@@ -199,10 +199,16 @@ const resetPassword = async (req, res) => {
 
 const checkAuth = async (req, res) => {
   try {
-    const user = await Users.findById(req.userId);
+    if (!req.userId) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Not authenticated" });
+    }
+    const user = await Users.findById(req.userId).select("-password");
+    console.log(user);
     if (!user) {
       return res
-        .status(404)
+        .status(400)
         .json({ success: false, message: "User not found" });
     }
 

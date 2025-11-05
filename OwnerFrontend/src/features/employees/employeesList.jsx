@@ -51,16 +51,16 @@ export const EmployeesList = () => {
     : employees;
 
   const renderEmployees = employees.map((employee) => (
-    <EmployeeItem employee={employee}></EmployeeItem>
+    <EmployeeItem key={employee._id} employee={employee}></EmployeeItem>
   ));
 
   //filter by restaurant
 
   return (
-    <div>
+    <div className="overflow-x-auto">
       <div className="lg:flex lg:justify-between lg:items-center">
         <h1>Employees List</h1>
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4 lg:flex-row">
           <select
             className="bg-white px-10 py-2.5 rounded-lg"
             onChange={(e) => setResId(e.target.value)}
@@ -77,36 +77,38 @@ export const EmployeesList = () => {
           </Link>
         </div>
       </div>
-      <table className="tableEmployee">
-        <thead>
-          <tr>
-            <th className="thEmployee">Employee full name</th>
-            <th className="thEmployee">Role</th>
-            <th className="thEmployee">Email</th>
-            <th className="thEmployee">Phone</th>
-            <th className="thEmployee">Restaurant</th>
-            <th className="thEmployee">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {renderEmployees.length === 0 ? (
-            <CreateFirstEmployee></CreateFirstEmployee>
-          ) : resId === "All" ? (
-            renderEmployees
-          ) : (
-            filteredEmployees.map((employee) => (
-              <EmployeeItem
-                key={employee._id}
-                employee={employee}
-                setModal={() => {
-                  setModal(true);
-                  setSelectedEmployeeId(employee._id);
-                }}
-              ></EmployeeItem>
-            ))
-          )}
-        </tbody>
-      </table>
+      <div>
+        <table className="tableEmployee">
+          <thead>
+            <tr>
+              <th className="thEmployee">Employee full name</th>
+              <th className="thEmployee">Role</th>
+              <th className="thEmployee">Email</th>
+              <th className="thEmployee">Phone</th>
+              <th className="thEmployee">Restaurant</th>
+              <th className="thEmployee">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {renderEmployees.length === 0 ? (
+              <CreateFirstEmployee></CreateFirstEmployee>
+            ) : resId === "All" ? (
+              renderEmployees
+            ) : (
+              filteredEmployees.map((employee) => (
+                <EmployeeItem
+                  key={employee._id}
+                  employee={employee}
+                  setModal={() => {
+                    setModal(true);
+                    setSelectedEmployeeId(employee._id);
+                  }}
+                ></EmployeeItem>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
       <ConfirmModal
         modal={modal}
         employeeId={selectedEmployeeId}

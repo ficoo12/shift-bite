@@ -57,12 +57,15 @@ const deleteRestaurant = async (req, res) => {
 
     if (id) {
       await Employees.deleteMany({ restaurant: id });
-      const deletedRestaurant = await Restaurants.findOneAndDelete(id);
+      const deletedRestaurant = await Restaurants.findOneAndDelete({ _id: id });
       if (!deletedRestaurant) {
         res.status(404).send({ message: "Restaurant not found" });
         return;
       }
-      res.status(200).json({ message: "Restoran uspiješno obrisan" });
+      res.status(200).json({
+        message: "Restoran uspiješno obrisan",
+        deleteRestaurantId: deletedRestaurant._id,
+      });
     }
   } catch (error) {
     console.error({ message: "Failed to delete restaurant", error });

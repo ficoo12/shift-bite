@@ -38,7 +38,7 @@ export const RestaurantsList = () => {
 
   return (
     <section>
-      <div className="lg:flex lg:justify-between lg:items-center">
+      <div className="lg:flex lg:justify-between lg:items-center space-y-4">
         <h1>Restaurants</h1>
         <div className="max-w-fit">
           <Link className="btnPrimary" to="/addrestaurants">
@@ -46,7 +46,7 @@ export const RestaurantsList = () => {
           </Link>
         </div>
       </div>
-      <div className="container flex flex-wrap mx-auto gap-4 mt-5">
+      <div className="container flex flex-wrap gap-4 mt-10 lg:mt-0">
         {renderRestaurants.length === 0 ? (
           <AddFirstRestaurant></AddFirstRestaurant>
         ) : (

@@ -19,6 +19,30 @@ export const createShift = createAsyncThunk("shifts/addShift", async (data) => {
   }
 });
 
+export const editShift = createAsyncThunk(
+  "shifts/editShift",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await client.put(`/shift/${data._id}`, data);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || err.message);
+    }
+  }
+);
+
+export const deleteShift = createAsyncThunk(
+  "shifts/deleteShift",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await client.delete(`/shift/${id}`);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || err.message);
+    }
+  }
+);
+
 const initialState = {
   shifts: [],
   status: "idle",
@@ -48,6 +72,30 @@ const shiftsSlice = createSlice({
       .addCase(fetchShifts.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload || action.error.message;
+      })
+      .addCase(editShift.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(editShift.fulfilled, (state, action) => {
+        if (!action.payload?._id) return;
+        state.status = "success";
+        const index = state.shifts.findIndex(
+          (shift) => shift._id === action.payload._id
+        );
+        if (index !== -1) state.shifts[index] === action.payload;
+        state.status = "succeeded";
+      })
+      .addCase(deleteShift.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
+      })
+      .addCase(deleteShift.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteShift.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        const deletedShiftId = action.payload._id;
+        state.shifts.filter((shift) => shift._id !== deletedShiftId);
       });
   },
 });
@@ -56,3 +104,5 @@ export const { shiftAdded, resetShiftsStatus } = shiftsSlice.actions;
 export default shiftsSlice.reducer;
 
 export const selectAllShifts = (state) => state.shifts.shifts;
+export const selectSingleShift = (state, shiftId) =>
+  state.shifts.shifts.find((shift) => shift._id === shiftId);

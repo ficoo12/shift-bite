@@ -1,6 +1,7 @@
 import { Form, Link, useActionData, useNavigation } from "react-router-dom";
 import Logo from "../../public/Logo.svg";
 import { motion } from "framer-motion";
+import { ClipLoader } from "react-spinners";
 
 const LoginForm = () => {
   const data = useActionData();
@@ -16,7 +17,7 @@ const LoginForm = () => {
     >
       <Form
         method="post"
-        className="card p-6 space-y-3 fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] lg:min-w-xl"
+        className="card p-6 space-y-3 fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] min-w-96 lg:min-w-xl"
         autoComplete="off"
       >
         {data && data.errors && (
@@ -53,16 +54,16 @@ const LoginForm = () => {
             placeholder="Enter your password"
           ></input>
         </div>
-        <div className="text-center text-secondary-500 hover:text-secondary-600 hover:underline">
+        {/* <div className="text-center text-secondary-500 hover:text-secondary-600 hover:underline">
           <Link to="/forgot-password">Forgot Password?</Link>
-        </div>
+        </div> */}
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className="btnPrimary"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Log in in progress" : "Log in"}
+          {isSubmitting ? <ClipLoader></ClipLoader> : "Log in"}
         </motion.button>
         <div>
           <p className="text-center">

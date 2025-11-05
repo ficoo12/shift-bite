@@ -61,12 +61,6 @@ const restaurantsSlice = createSlice({
         existingRestaurant.phone = phone;
       }
     },
-    restaurantRemoved(state, action) {
-      const restaurantId = action.payload;
-      state.restaurants = state.restaurants.filter(
-        (restaurant) => restaurant._id !== restaurantId
-      );
-    },
     resetRestaurantStatus(state) {
       state.status = "idle";
     },
@@ -88,7 +82,7 @@ const restaurantsSlice = createSlice({
         state.status = "loading";
       })
       .addCase(deleteRestaurant.fulfilled, (state, action) => {
-        const deletedRestaurantId = action.payload._id;
+        const deletedRestaurantId = action.payload.deleteRestaurantId;
         state.restaurants = state.restaurants.filter(
           (restaurant) => restaurant._id !== deletedRestaurantId
         );
@@ -96,7 +90,7 @@ const restaurantsSlice = createSlice({
       });
   },
 });
-export const { restaurantUpdated, restaurantRemoved, resetRestaurantStatus } =
+export const { restaurantUpdated, resetRestaurantStatus } =
   restaurantsSlice.actions;
 export default restaurantsSlice.reducer;
 

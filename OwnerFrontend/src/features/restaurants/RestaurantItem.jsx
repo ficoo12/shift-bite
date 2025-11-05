@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const RestaurantItem = ({ restaurant, setModal }) => {
   return (
     <section>
-      <div key={restaurant._id} className="card w-80 overflow-hidden">
+      <div key={restaurant._id} className="card max-w-80 overflow-hidden">
         <div className="px-3 py-3 space-y-2">
           <img className="rounded-md" src={restaurantImg}></img>
           <h2>

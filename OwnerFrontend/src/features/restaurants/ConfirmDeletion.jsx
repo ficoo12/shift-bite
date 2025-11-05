@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useDispatch } from "react-redux";
-import { deleteRestaurant, restaurantRemoved } from "./restaurantsSlice";
+import { deleteRestaurant, resetRestaurantStatus } from "./restaurantsSlice";
 import { resetEmployeesStatu } from "../employees/employeesSlice";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import generateWord from "../../../helperFunction/GenerateWord";
@@ -20,8 +20,8 @@ export const ConfirmDeletion = ({ modal, close, restaurantId }) => {
 
   const handleDelete = () => {
     if (randomWord.props.children === typedWord) {
-      dispatch(restaurantRemoved(restaurantId));
       dispatch(deleteRestaurant(restaurantId));
+      dispatch(resetRestaurantStatus());
       dispatch(resetEmployeesStatu());
       close();
     } else {

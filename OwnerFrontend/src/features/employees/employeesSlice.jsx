@@ -100,15 +100,15 @@ const employeesSlice = createSlice({
         state.error = action.payload || action.error.message;
       })
       .addCase(updateEmployeeData.pending, (state) => {
-        state.loading = "loading";
+        state.status = "loading";
         state.error = null;
       })
       .addCase(updateEmployeeData.rejected, (state, action) => {
-        state.loading = false;
+        state.status = false;
         state.error = action.payload;
       })
       .addCase(updateEmployeeData.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = "succeeded";
         const index = state.employees.findIndex(
           (item) => item._id === action.payload._id
         );

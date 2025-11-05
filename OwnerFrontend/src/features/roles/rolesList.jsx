@@ -23,7 +23,7 @@ export const RolesList = () => {
 
   const renderRoles = roles.map((role) => (
     <div
-      className="bg-white max-w-60 min-h-60 flex justify-center items-center shadow rounded-md lg:min-w-60"
+      className="bg-white max-w-60 min-h-60 flex justify-center items-center shadow rounded-md lg:min-w-60 min-w-56"
       key={role._id}
     >
       <h3 className="text-center">{role.name}</h3>
@@ -38,7 +38,7 @@ export const RolesList = () => {
         {renderRoles}
         <div
           onClick={() => setModal(true)}
-          className="bg-white max-w-60 min-h-60 flex justify-center items-center shadow rounded-md lg:min-w-60 flex-col hover:bg-secondary-500 transform-all duration-200 ease-in hover:cursor-pointer"
+          className="bg-white max-w-60 min-h-60 flex justify-center items-center shadow rounded-md lg:min-w-60 flex-col hover:bg-secondary-500 transform-all duration-200 ease-in hover:cursor-pointer min-w-56"
         >
           <PlusIcon className="w-10"></PlusIcon>
           <p>Add role</p>

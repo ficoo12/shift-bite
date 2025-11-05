@@ -5,7 +5,7 @@ import {
   selectAllEmployees,
 } from "../features/employees/employeesSlice";
 import { useEffect, useState } from "react";
-import { ArrowLeftIcon } from "@heroicons/react/24/solid";
+import { ArrowLeftIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import { eachDayOfInterval, format, isSameDay } from "date-fns";
 import Modal from "./Modal";
@@ -15,11 +15,12 @@ import {
   selectAllShifts,
 } from "../features/shifts/shiftsSlice";
 import { fetchShifts } from "../features/shifts/shiftsSlice";
+import { Link } from "react-router-dom";
+import ShiftItem from "../features/shifts/ShiftItem";
 const Schedule = ({ id }) => {
   const [firstDay, setFirstDay] = useState(new Date());
   const [lastDay, setLastDay] = useState(new Date());
   const [roleName, setRoleName] = useState(null);
-
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -31,11 +32,13 @@ const Schedule = ({ id }) => {
 
   useEffect(() => {
     const today = new Date();
+    const dayOfWeek = today.getDay();
+    const diffToMonday = (dayOfWeek + 6) % 7;
+
     const start = new Date(today);
-    const end = new Date(today);
+    start.setDate(today.getDate() - diffToMonday);
 
-    start.setDate(today.getDate() + 1 - today.getDay());
-
+    const end = new Date(start);
     end.setDate(start.getDate() + 6);
 
     setFirstDay(start);
@@ -49,6 +52,8 @@ const Schedule = ({ id }) => {
 
   const employees = useSelector(selectAllEmployees);
   const employeesStatus = useSelector((state) => state.employees.status);
+
+  console.log(employees);
 
   const shifts = useSelector(selectAllShifts);
   const shiftsStatus = useSelector((state) => state.shifts.status);
@@ -146,65 +151,81 @@ const Schedule = ({ id }) => {
           className="w-5 hover:cursor-pointer"
         />
       </div>
-
-      <table className="container">
-        <thead>
-          <tr>
-            <th className="bg-white text-left pl-2">Roles</th>
-            {weekdays.map((day) => {
-              return (
-                <th
-                  key={day}
-                  className="bg-lightGray border border-lightGray font-normal py-2 "
-                >
-                  {day}
-                </th>
-              );
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {roles.map((role) => (
-            <tr key={role._id} className="bg-white border border-lightGray">
-              <td className="pl-2">{role.name}</td>
-              {daysInWeek.map((day) => {
-                const dayShifts = shifts.filter(
-                  (shift) =>
-                    isSameDay(new Date(shift.date), day) &&
-                    shift.restaurant === id &&
-                    shift.employee.role === role._id
-                );
+      <div className="w-full overflow-x-scroll lg:max-w-[800px] xl:max-w-[1100px] 2xl:max-w-[1350px] ">
+        <table className="min-w-[1500px]">
+          <thead>
+            <tr>
+              <th className="bg-white text-left pl-2">Roles</th>
+              {weekdays.map((day) => {
                 return (
-                  <td
-                    onClick={() => {
-                      setSelectedDate(day);
-                      setOpen(true);
-                      setRoleName(role.name);
-                    }}
-                    className="bg-white  h-20 hover:bg-gray-300 hover:cursor-pointer  border border-lightGray max-w-20 lg:min-w-10 px-2 duration-200 transform-all"
+                  <th
                     key={day}
+                    className="bg-lightGray border border-lightGray font-normal py-2 "
                   >
-                    {dayShifts.length > 0 &&
-                      dayShifts.map((shift) => (
-                        <div
-                          key={shift._id}
-                          className="bg-secondary-500 py-2 px-2 rounded-xs"
-                        >
-                          <p>
-                            {shift.employee.name} {shift.employee.surname}
-                          </p>
-                          <p>
-                            {shift.startTime} - {shift.endTime}
-                          </p>
-                        </div>
-                      ))}
-                  </td>
+                    {day}
+                  </th>
                 );
               })}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {roles.map((role) => (
+              <tr key={role._id} className="bg-white border border-lightGray">
+                <td className="pl-2 max-w-10">{role.name}</td>
+                {daysInWeek.map((day) => {
+                  const dayShifts = shifts.filter(
+                    (shift) =>
+                      isSameDay(new Date(shift.date), day) &&
+                      shift.restaurant === id &&
+                      shift.employee.role === role._id
+                  );
+                  return (
+                    <td
+                      className=" border border-lightGray max-w-20 px-4 duration-200 transform-all py-4"
+                      key={day}
+                    >
+                      {dayShifts.length > 0 ? (
+                        <div className="space-y-3">
+                          {dayShifts.map((shift) => (
+                            <ShiftItem
+                              key={shift._id}
+                              shift={shift}
+                            ></ShiftItem>
+                          ))}
+                          <div
+                            onClick={() => {
+                              setSelectedDate(day);
+                              setOpen(true);
+                              setRoleName(role.name);
+                            }}
+                            className="bg-gray-50 flex flex-col items-center justify-center py-10 hover:bg-gray-100 hover:cursor-pointer"
+                          >
+                            <p className="text-center">Add more shifts</p>
+                            <PlusCircleIcon className="w-10 text-gray-300"></PlusCircleIcon>
+                          </div>
+                        </div>
+                      ) : (
+                        <div
+                          onClick={() => {
+                            setSelectedDate(day);
+                            setOpen(true);
+                            setRoleName(role.name);
+                          }}
+                          className="bg-gray-50 flex justify-center py-10 hover:bg-gray-100 hover:cursor-pointer"
+                        >
+                          <PlusCircleIcon className="w-10 text-gray-300"></PlusCircleIcon>
+                        </div>
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* DEFINE NEW SHIFT MODAL */}
       <Modal open={open} close={() => setOpen(false)}>
         <h1 className="text-center">Define new shift</h1>
         <form onSubmit={defineShift} autoComplete="off" className="space-y-5">
@@ -233,7 +254,8 @@ const Schedule = ({ id }) => {
               className="bg-white w-full px-4 py-4 border border-textDark rounded-sm"
             >
               {employees.map((employee) =>
-                employee.role.name === roleName ? (
+                employee.role.name === roleName &&
+                employee.restaurant._id === id ? (
                   <option key={employee._id} value={employee._id}>
                     {employee.name.charAt(0).toUpperCase()}
                     {employee.name.slice(1).toLowerCase()}{" "}
@@ -244,7 +266,7 @@ const Schedule = ({ id }) => {
               )}
             </select>
           </div>
-          <button className="btnPrimary ">Define new shift</button>
+          <button className="btnPrimary">Define new shift</button>
         </form>
       </Modal>
     </div>

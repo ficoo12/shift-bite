@@ -36,11 +36,11 @@ export const SingleRestaurantPage = () => {
 
   return (
     <>
-      <div className="flex items-center gap-2 justify-between py-4">
-        <div className="flex gap-4">
+      <div className="py-4">
+        <div className="flex flex-col lg:flex-row gap-4 justify-between">
           <Link
             to="/restaurants"
-            className="flex bg-white px-4 w-40 items-center gap-4 rounded-sm border border-lightGray hover:bg-lightGray hover:cursor-pointer transition-all duration-200 ease-in"
+            className="flex bg-white px-4 w-40 items-center gap-4 rounded-sm border border-lightGray hover:bg-lightGray hover:cursor-pointer transition-all duration-200 ease-in py-6 lg:py-0"
           >
             <ArrowLeftIcon className="w-5 "></ArrowLeftIcon>
             <p>Go back</p>
@@ -48,7 +48,7 @@ export const SingleRestaurantPage = () => {
 
           <h1>
             {restaurantData?.name.charAt(0).toUpperCase()}
-            {restaurantData?.name.slice(1)}
+            {restaurantData?.name.slice(1)} - Schedule
           </h1>
         </div>
       </div>
