@@ -16,11 +16,11 @@ import { createEmployee, resetEmployeesStatu } from "./employeesSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { BackwardIcon } from "@heroicons/react/24/solid";
 
-export const AddNewEmployee = () => {
-  const [addRequestStatus, setAddRequestStatus] = useState();
-  const [phoneNumber, setPhoneNumber] = useState("+385");
+export const AddEmployee = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [addRequestStatus, setAddRequestStatus] = useState();
+  const [phoneNumber, setPhoneNumber] = useState("+385");
   const restaurants = useSelector(selectAllRestaurants);
   const roles = useSelector(selectAllRoles);
   const restaurantStatus = useSelector((state) => state.restaurants.status);

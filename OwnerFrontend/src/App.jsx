@@ -13,10 +13,10 @@ import { EditRestaurantForm } from "./features/restaurants/editRestaurantForm";
 import { RolesList } from "./features/roles/rolesList";
 import { EmployeesList } from "./features/employees/employeesList";
 import { EditEmployee } from "./features/employees/editEmployee";
-import { AddNewEmployee } from "./features/employees/AddNewEmployee";
 import { VerifyEmail } from "./components/VerifyEmail";
 import { Toaster } from "react-hot-toast";
 import { EditShift } from "./features/shifts/editShift";
+import { AddEmployee } from "./features/employees/addEmployee";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -57,7 +57,7 @@ export default function App() {
         },
         {
           path: "/addNewEmployee",
-          element: <AddNewEmployee />,
+          element: <AddEmployee></AddEmployee>,
         },
         {
           path: "/editEmployee/:id",

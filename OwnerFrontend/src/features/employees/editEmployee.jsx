@@ -18,32 +18,15 @@ export const EditEmployee = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const restaurants = useSelector(selectAllRestaurants);
+  const roles = useSelector(selectAllRoles);
+  const restaurantStatus = useSelector((state) => state.restaurants.status);
+  const rolesStatus = useSelector((state) => state.roles.status);
 
   const employee = useSelector((state) => selectSingleEmployee(state, id));
   const employeeStatus = useSelector((state) => state.employees.status);
 
   const [employeeReload, setEmployeeReload] = useState(null);
-
-  useEffect(() => {
-    if (!employee) {
-      const fetchSingleEmployee = async (id) => {
-        const response = await client.get(`/employees/${id}`);
-        setEmployeeReload(response.data);
-        return response.data;
-      };
-
-      fetchSingleEmployee(id);
-    }
-  }, []);
-
-  const employeeData = employee || employeeReload;
-
-  if (employeeStatus === "loading" && !employeeData) return <p>Loading...</p>;
-
-  const restaurants = useSelector(selectAllRestaurants);
-  const roles = useSelector(selectAllRoles);
-  const restaurantStatus = useSelector((state) => state.restaurants.status);
-  const rolesStatus = useSelector((state) => state.roles.status);
 
   useEffect(() => {
     if (rolesStatus == "idle") {
@@ -56,6 +39,22 @@ export const EditEmployee = () => {
       dispatch(fetchRestaurants());
     }
   }, [restaurantStatus, dispatch]);
+
+  useEffect(() => {
+    if (!employee) {
+      const fetchSingleEmployee = async (id) => {
+        const response = await client.get(`/employees/${id}`);
+        setEmployeeReload(response.data);
+        return response.data;
+      };
+
+      fetchSingleEmployee(id);
+    }
+  }, [employee, id]);
+
+  const employeeData = employee || employeeReload;
+
+  if (employeeStatus === "loading" && !employeeData) return <p>Loading...</p>;
 
   const renderResName = restaurants.map((restaurant) => (
     <option key={restaurant._id} value={restaurant._id}>
