@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { editShift, resetShiftsStatus, selectSingleShift } from "./shiftsSlice";
 
-export const EditShift = () => {
+export default function EditShift() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -59,4 +59,4 @@ export const EditShift = () => {
       </div>
     </>
   );
-};
+}
