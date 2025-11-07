@@ -18,8 +18,8 @@ app.use(
   })
 );
 
-app.use(express.json()); // allows us to parse incoming requests :req.body
-app.use(cookieParser()); // this will allow us to parse incoming cookies
+app.use(express.json());
+app.use(cookieParser());
 
 main()
   .then(() => console.log("Mongodb connect successfully."))

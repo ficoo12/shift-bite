@@ -2,7 +2,6 @@ const generateTokenAndSetCookie = require("../helperfunction/generateTokenAndSet
 const Shifts = require("../schedules/schedules.model");
 const Employees = require("./employees.model");
 const bcrypt = require("bcrypt");
-//create employee
 
 const createEmployee = async (req, res) => {
   try {
@@ -21,12 +20,8 @@ const createEmployee = async (req, res) => {
   }
 };
 
-//delete employee
-
 const deleteEmployee = async (req, res) => {
   try {
-    //it must be id because you sepcified the route like this: "/employees/:id"
-    //so when express reads url it will parse it into req.params.id
     const { id } = req.params;
 
     const deletedEmployee = await Employees.findByIdAndDelete(id);
@@ -42,8 +37,6 @@ const deleteEmployee = async (req, res) => {
   }
 };
 
-//Edit employee data
-
 const updateEmployee = async (req, res) => {
   try {
     const ownerId = req.userId;
@@ -52,7 +45,6 @@ const updateEmployee = async (req, res) => {
       { _id: id, owner: ownerId },
       { ...req.body, owner: ownerId },
       {
-        //this teels return updated document after applying the changes
         new: true,
       }
     );
@@ -75,8 +67,6 @@ const updateEmployee = async (req, res) => {
   }
 };
 
-//get all employees
-
 const getAllEmpployees = async (req, res) => {
   const owner = req.userId;
   console.log(owner);
@@ -94,8 +84,6 @@ const getAllEmpployees = async (req, res) => {
   }
 };
 
-//get single employee
-
 const getSingleEmployee = async (req, res) => {
   try {
     const { id } = req.params;
@@ -111,8 +99,6 @@ const getSingleEmployee = async (req, res) => {
     res.status(500).send({ message: "Failed to fetch employee." });
   }
 };
-
-//employee logIn
 
 const employeeLogIn = async (req, res) => {
   const { email, password } = req.body;
@@ -148,8 +134,6 @@ const employeeLogIn = async (req, res) => {
     res.status(500).send({ message: "Failed to log in" });
   }
 };
-
-//employee logout
 
 const employeeLogOut = async (req, res) => {
   res.clearCookie("token");

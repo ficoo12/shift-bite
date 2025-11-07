@@ -13,7 +13,7 @@ import {
 } from "../roles/rolesSlice";
 import { useEffect, useState } from "react";
 import { createEmployee, resetEmployeesStatu } from "./employeesSlice";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BackwardIcon } from "@heroicons/react/24/solid";
 export const AddNewEmployee = () => {
   const [addRequestStatus, setAddRequestStatus] = useState();

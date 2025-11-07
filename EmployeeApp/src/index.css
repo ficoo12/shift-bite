@@ -81,7 +81,7 @@ body {
       @apply pl-4;
     }
     .tdEmployee {
-      @apply py-5 border-b-1;
+      @apply py-5 border-b;
     }
     .tdEmployee:nth-child(1) {
       @apply pl-4;

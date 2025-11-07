@@ -17,7 +17,6 @@ import { EditEmployee } from "./features/employees/editEmployee";
 import { VerifyEmail } from "./components/VerifyEmail";
 import { Toaster } from "react-hot-toast";
 import { EditShift } from "./features/shifts/editShift";
-import ForgotPassword from "./components/ForgotPassword";
 
 export default function App() {
   const router = createBrowserRouter([
