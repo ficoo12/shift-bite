@@ -12,8 +12,8 @@ import { SingleRestaurantPage } from "./features/restaurants/singleRestaurantPag
 import { EditRestaurantForm } from "./features/restaurants/editRestaurantForm";
 import { RolesList } from "./features/roles/rolesList";
 import { EmployeesList } from "./features/employees/employeesList";
-import { AddNewEmployee } from "./features/employees/AddNewEmployee";
 import { EditEmployee } from "./features/employees/editEmployee";
+import { AddNewEmployee } from "./features/employees/AddNewEmployee";
 import { VerifyEmail } from "./components/VerifyEmail";
 import { Toaster } from "react-hot-toast";
 import { EditShift } from "./features/shifts/editShift";
@@ -22,38 +22,38 @@ export default function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <LogedIn></LogedIn>,
+      element: <LogedIn />,
       loader: checkAuth,
-      errorElement: <ErrorPage></ErrorPage>,
+      errorElement: <ErrorPage />,
       children: [
         {
           index: true,
-          element: <Dashboard></Dashboard>,
+          element: <Dashboard />,
         },
         {
           path: "/restaurants",
-          element: <RestaurantsList></RestaurantsList>,
+          element: <RestaurantsList />,
         },
         {
           path: "/restaurants/:id",
-          element: <SingleRestaurantPage></SingleRestaurantPage>,
+          element: <SingleRestaurantPage />,
         },
         {
           path: "/addrestaurants",
-          element: <AddRestaurantForm></AddRestaurantForm>,
+          element: <AddRestaurantForm />,
         },
         {
           path: "/editRestaurant/:id",
-          element: <EditRestaurantForm></EditRestaurantForm>,
+          element: <EditRestaurantForm />,
         },
         {
           path: "/roles",
-          element: <RolesList></RolesList>,
+          element: <RolesList />,
         },
 
         {
           path: "/employees",
-          element: <EmployeesList></EmployeesList>,
+          element: <EmployeesList />,
         },
         {
           path: "/addNewEmployee",

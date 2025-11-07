@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { createEmployee, resetEmployeesStatu } from "./employeesSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { BackwardIcon } from "@heroicons/react/24/solid";
+
 export const AddNewEmployee = () => {
   const [addRequestStatus, setAddRequestStatus] = useState();
   const [phoneNumber, setPhoneNumber] = useState("+385");
@@ -24,6 +25,8 @@ export const AddNewEmployee = () => {
   const roles = useSelector(selectAllRoles);
   const restaurantStatus = useSelector((state) => state.restaurants.status);
   const rolesStatus = useSelector((state) => state.restaurants.status);
+
+  console.log(addRequestStatus);
 
   useEffect(() => {
     if (rolesStatus == "idle") {

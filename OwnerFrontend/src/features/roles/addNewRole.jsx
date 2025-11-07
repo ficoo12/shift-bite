@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { useAppDispatch } from "../../app/hooks";
 import { createRole, resetRoleStatus } from "./rolesSlice";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import { resetRestaurantStatus } from "../restaurants/restaurantsSlice";
+import { useDispatch } from "react-redux";
+
 export const AddNewRole = ({ open, close }) => {
+  const dispatch = useDispatch();
   const [addRequestStatus, setAddRequestStatus] = useState();
+  console.log(addRequestStatus);
   if (open === false) return null;
-  const dispatch = useAppDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
