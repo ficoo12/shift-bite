@@ -15,8 +15,8 @@ import { EmployeesList } from "./features/employees/employeesList";
 import { EditEmployee } from "./features/employees/editEmployee";
 import { VerifyEmail } from "./components/VerifyEmail";
 import { Toaster } from "react-hot-toast";
-import { EditShift } from "./features/shifts/editShift";
 import { AddEmployee } from "./features/employees/addEmployee";
+import { EditShift } from "./features/shifts/editShift";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -65,7 +65,7 @@ export default function App() {
         },
         {
           path: "/editShift/:id",
-          element: <EditShift />,
+          element: <EditShift></EditShift>,
         },
       ],
     },
