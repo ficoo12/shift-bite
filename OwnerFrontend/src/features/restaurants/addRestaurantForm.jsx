@@ -62,7 +62,9 @@ export const AddRestaurantForm = () => {
           ></input>
         </div>
         <div>
-          <label htmlFor="restaurantPhoneNumber">Restaurant phone:</label>
+          <label htmlFor="restaurantPhoneNumber">
+            Restaurant phone number:
+          </label>
           <input
             type="text"
             id="restaurantPhoneNumber"

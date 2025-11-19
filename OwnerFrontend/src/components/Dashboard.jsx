@@ -1,12 +1,25 @@
 import { AddFirstRestaurant } from "../features/restaurants/addFirstRestaurant";
 import restaurantImg from "../assets/restaurantImg.jpg";
-import { useSelector } from "react-redux";
-import { selectAllRestaurants } from "../features/restaurants/restaurantsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchRestaurants,
+  selectAllRestaurants,
+} from "../features/restaurants/restaurantsSlice";
 
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const Dashboard = () => {
   const restaurants = useSelector(selectAllRestaurants);
+  const restauransStatus = useSelector((state) => state.restaurants.status);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (restauransStatus == "idle") {
+      dispatch(fetchRestaurants());
+    }
+  }, [restauransStatus, dispatch]);
 
   const renderRestaurants = restaurants.map((restaurant) => (
     <div key={restaurant._id} className="px-3 py-3 space-y-2 max-w-80 card">

@@ -54,9 +54,6 @@ const LoginForm = () => {
             placeholder="Enter your password"
           ></input>
         </div>
-        {/* <div className="text-center text-secondary-500 hover:text-secondary-600 hover:underline">
-          <Link to="/forgot-password">Forgot Password?</Link>
-        </div> */}
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}

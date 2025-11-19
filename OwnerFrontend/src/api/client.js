@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const client = axios.create({
-  baseURL: "https://shift-bite-backend.onrender.com/api",
+  baseURL: "http://localhost:8080/api",
   withCredentials: true,
 });
 
