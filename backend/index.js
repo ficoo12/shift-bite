@@ -12,7 +12,7 @@ const RolesRoutes = require("./roles/roles.route");
 const ShiftRoutes = require("./schedules/schedules.route");
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: ["http://localhost:5173", "http://localhost:5174", "https://shift-bite-frontend.onrender.com"],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   })
