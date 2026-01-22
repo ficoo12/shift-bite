@@ -12,7 +12,7 @@ const Header = ({ toggleSidebar }) => {
 
       <div className="flex w-full justify-end">
         <div className="flex items-center gap-4">
-          <p className="text-gray-600">Welcome Back, {employee.name}</p>
+          <p className="text-gray-600">Welcome Back, {employee?.name}</p>
         </div>
       </div>
     </header>
