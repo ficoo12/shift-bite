@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const app = express();
-app.set("trust proxy", 1);
+
 
 const UsersRoutes = require("./users/users.route");
 const EmployeesRoutes = require("./employees/employees.route");
