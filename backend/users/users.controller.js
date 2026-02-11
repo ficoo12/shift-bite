@@ -94,6 +94,7 @@ const verifyEmail = async (req, res) => {
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email, password);
   try {
     const user = await Users.findOne({ email });
     if (!user) {
@@ -106,7 +107,7 @@ const loginUser = async (req, res) => {
       return res.status(401).send({ message: "Invalid password!" });
     }
 
-    const token = generateTokenAndSetCookie(res, user._id);
+    const token = generateTokenAndSetCookie(user._id);
 
     user.lastLogin = new Date();
 
