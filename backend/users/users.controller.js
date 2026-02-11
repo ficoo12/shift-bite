@@ -106,7 +106,7 @@ const loginUser = async (req, res) => {
       return res.status(401).send({ message: "Invalid password!" });
     }
 
-    generateTokenAndSetCookie(res, user._id);
+    const token = generateTokenAndSetCookie(res, user._id);
 
     user.lastLogin = new Date();
 
@@ -115,6 +115,7 @@ const loginUser = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Logged in successfuly",
+      token,
       user: {
         ...user._doc,
         password: undefined,
@@ -126,10 +127,10 @@ const loginUser = async (req, res) => {
   }
 };
 
-const logoutUser = async (req, res) => {
-  res.clearCookie("token");
-  res.status(200).json({ success: true, message: "Logged out successfully" });
-};
+// const logoutUser = async (req, res) => {
+//   res.clearCookie("token");
+//   res.status(200).json({ success: true, message: "Logged out successfully" });
+// };
 
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
@@ -224,7 +225,7 @@ module.exports = {
   getSingleUser,
   verifyEmail,
   loginUser,
-  logoutUser,
+  // logoutUser,
   forgotPassword,
   resetPassword,
   checkAuth,

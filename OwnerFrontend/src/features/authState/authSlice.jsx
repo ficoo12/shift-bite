@@ -3,6 +3,7 @@ import client from "../../api/client";
 import { redirect } from "react-router-dom";
 const initialState = {
   user: null,
+  token: localStorage.getItem("token"),
   logedIn: false,
   loading: false,
   error: null,
@@ -55,6 +56,7 @@ export const loginUser = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const response = await client.post("/login", credentials);
+      localStorage.setItem("token", response.data.token);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Login failed");
@@ -62,10 +64,10 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const logoutUser = createAsyncThunk("auth/logoutUser", async () => {
-  await client.post("/logout");
-  return true;
-});
+// export const logoutUser = createAsyncThunk("auth/logoutUser", async () => {
+//   await client.post("/logout");
+//   return true;
+// });
 
 const authSlice = createSlice({
   name: "auth",
@@ -76,6 +78,11 @@ const authSlice = createSlice({
       state.logedIn = false;
       state.error = null;
       state.loading = false;
+    },
+    logoutUser: (state) => {
+      localStorage.removeItem("token");
+      state.token = null;
+      state.user = null;
     },
   },
   extraReducers: (builder) => {
@@ -93,10 +100,6 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(logoutUser.fulfilled, (state) => {
-        state.user = null;
-        state.logedIn = false;
-      })
       .addCase(signupUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -104,5 +107,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { resetAuthState } = authSlice.actions;
+export const { resetAuthState, logoutUser } = authSlice.actions;
 export default authSlice.reducer;

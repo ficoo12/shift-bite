@@ -4,7 +4,7 @@ const {
   getSingleUser,
   verifyEmail,
   loginUser,
-  logoutUser,
+  // logoutUser,
   forgotPassword,
   resetPassword,
   checkAuth,
@@ -15,7 +15,7 @@ const router = express.Router();
 router.route("/users").post(createUser);
 router.route("/users/:id").get(getSingleUser);
 router.route("/login").post(loginUser);
-router.route("/logout").post(logoutUser);
+// router.route("/logout").post(logoutUser);
 router.route("/verify-email").post(verifyEmail);
 router.route("/forgot-password").post(forgotPassword);
 router.route("/reset-password/:token").post(resetPassword);
