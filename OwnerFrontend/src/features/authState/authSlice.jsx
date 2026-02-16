@@ -55,10 +55,18 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (credentials, { rejectWithValue }) => {
     try {
+      console.log("šaljem request" + credentials);
       const response = await client.post("/login", credentials);
+      console.log(response);
+      console.log("dobio sam response:" + response);
       localStorage.setItem("token", response.data.token);
       return response.data;
     } catch (error) {
+      console.log("FULL ERROR:", error);
+      console.log("RESPONSE:", error.response);
+      console.log("REQUEST:", error.request);
+      console.log("MESSAGE:", error.message);
+
       return rejectWithValue(error.response?.data?.message || "Login failed");
     }
   }
@@ -95,6 +103,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.logedIn = true;
         state.user = action.payload.user;
+        state.token = action.payload.token;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;

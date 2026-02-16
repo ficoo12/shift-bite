@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { checkAuth } from "./features/authState/authSlice";
 import SignUp, { action as signUpAction } from "./components/Signup";
 import LogIn, { action as logInAction } from "./components/Login";
+import { checkAuth } from "./features/authState/authSlice";
 import LogedIn from "./components/LogedIn";
 import ErrorPage from "./components/ErrorPage";
 import { action as logOutAction } from "./components/Logout";

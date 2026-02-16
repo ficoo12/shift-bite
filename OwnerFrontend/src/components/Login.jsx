@@ -16,10 +16,12 @@ export async function action({ request }) {
     email: data.get("email"),
     password: data.get("password"),
   };
+  console.log(authData);
 
   try {
     const resultAction = await store.dispatch(loginUser(authData));
-
+    console.log("RESULT:", resultAction.payload);
+    console.log("ERROR:", resultAction.error);
     if (loginUser.fulfilled.match(resultAction)) {
       return redirect("/");
     } else if (loginUser.rejected.match(resultAction)) {
